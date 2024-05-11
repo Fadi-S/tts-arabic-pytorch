@@ -135,8 +135,9 @@ class ArabDataset(Dataset):
             try:
                 tokens = text.phonemes_to_tokens(phonemes)
                 token_ids = text.tokens_to_ids(tokens)
-            except:
-                print(f'invalid phonemes at line {l_idx}: {line}')
+            except Exception as e:
+                # print(f'invalid phonemes at line {l_idx}: {line}')
+                print(e)
                 continue
            
             phoneme_mel_list.append((torch.LongTensor(token_ids), fpath))
