@@ -102,7 +102,7 @@ class ArabDataset(Dataset):
                  txtpath: str = 'tts data sample/text.txt',
                  wavpath: str = './',
                  label_pattern: str = '"(?P<filename>.*)" "(?P<phonemes>.*)"',
-                 sr_target: int = 22050
+                 sr_target: int = 44100
                  ):
         super().__init__()
 
