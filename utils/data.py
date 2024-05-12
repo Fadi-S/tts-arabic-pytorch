@@ -58,10 +58,10 @@ def normalize_pitch(pitch,
 
 def remove_silence(energy_per_frame: torch.Tensor, 
                    thresh: float = -10.0):
-    return energy_per_frame > thresh
+    keep = energy_per_frame > thresh
     # keep silence at the end
     i = keep.size(0)-1
-    while keep.any() and i > 0:
+    while not keep[i] and i > 0:
         keep[i] = True
         i -= 1
     return keep
@@ -153,10 +153,12 @@ class ArabDataset(Dataset):
         mel_raw = self.mel_fn(wave)
         mel_log = mel_raw.clamp_min(1e-5).log().squeeze()
 
-        energy_per_frame = mel_log.mean(0)
-        mel_log = mel_log[:, remove_silence(energy_per_frame)]
-
         return mel_log
+
+        # energy_per_frame = mel_log.mean(0)
+        # mel_log = mel_log[:, remove_silence(energy_per_frame)]
+        #
+        # return mel_log
 
     def __len__(self):
         return len(self.data)
