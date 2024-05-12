@@ -136,7 +136,6 @@ class ArabDataset(Dataset):
                 tokens = text.phonemes_to_tokens(phonemes)
                 token_ids = text.tokens_to_ids(tokens)
             except:
-                print(phonemes, filename)
                 print(f'invalid phonemes at line {l_idx}: {line}')
                 continue
            

@@ -48,6 +48,8 @@ symbols = [
     'u',
     'i',
     'aa',  # long
+    'aaa',  # very long
+    'aaaa',  # very very long
     'uu',
     'ii',
 ]
