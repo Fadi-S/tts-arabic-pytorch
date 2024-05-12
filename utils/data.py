@@ -150,15 +150,15 @@ class ArabDataset(Dataset):
         if sr != self.sr_target:
             wave = torchaudio.functional.resample(wave, sr, self.sr_target, 64)
 
+        wave = wave[0]
+
         mel_raw = self.mel_fn(wave)
         mel_log = mel_raw.clamp_min(1e-5).log().squeeze()
 
-        return mel_log
+        energy_per_frame = mel_log.mean(0)
+        mel_log = mel_log[:, remove_silence(energy_per_frame)]
 
-        # energy_per_frame = mel_log.mean(0)
-        # mel_log = mel_log[:, remove_silence(energy_per_frame)]
-        #
-        # return mel_log
+        return mel_log
 
     def __len__(self):
         return len(self.data)
