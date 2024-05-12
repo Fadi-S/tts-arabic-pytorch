@@ -59,12 +59,9 @@ def normalize_pitch(pitch,
 def remove_silence(energy_per_frame: torch.Tensor, 
                    thresh: float = -10.0):
     keep = energy_per_frame > thresh
-    print(keep)
     # keep silence at the end
     i = keep.size(0)-1
-    print(i)
     while keep.any() and i > 0:
-        print(i)
         keep[i] = True
         i -= 1
     return keep
