@@ -150,7 +150,7 @@ class ArabDataset(Dataset):
         if sr != self.sr_target:
             wave = torchaudio.functional.resample(wave, sr, self.sr_target, 64)
 
-        wave = wave[0]
+        wave = wave[0].unsqueeze(0)
 
         mel_raw = self.mel_fn(wave)
         mel_log = mel_raw.clamp_min(1e-5).log().squeeze()
