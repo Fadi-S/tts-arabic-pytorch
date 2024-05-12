@@ -6,6 +6,7 @@ import torch
 import torchaudio
 import numpy as np
 from torch.utils.data import Dataset
+from tqdm import tqdm
 
 from utils import read_lines_from_file, progbar
 from utils.audio import MelSpectrogram
@@ -119,7 +120,7 @@ class ArabDataset(Dataset):
 
         phoneme_mel_list = []
 
-        for l_idx, line in enumerate(progbar(lines)):
+        for l_idx, line in enumerate(tqdm(lines)):
             try:
                 phonemes, filename = _process_line(
                     self.label_pattern, line)
