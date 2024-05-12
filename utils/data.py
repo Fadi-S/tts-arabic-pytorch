@@ -62,8 +62,9 @@ def remove_silence(energy_per_frame: torch.Tensor,
     print(keep)
     # keep silence at the end
     i = keep.size(0)-1
-    print(keep)
+    print(i)
     while not keep[i] and i > 0:
+        print(i)
         keep[i] = True
         i -= 1
     return keep
