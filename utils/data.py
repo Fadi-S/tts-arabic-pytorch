@@ -154,7 +154,7 @@ class ArabDataset(Dataset):
         mel_log = mel_raw.clamp_min(1e-5).log().squeeze()
 
         # energy_per_frame = mel_log.mean(0)
-        # mel_log = mel_log[:, remove_silence(energy_per_frame)]
+        mel_log = mel_log[:, :]
 
         return mel_log
 
