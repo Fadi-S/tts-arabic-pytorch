@@ -102,7 +102,7 @@ class ArabDataset(Dataset):
                  txtpath: str = 'tts data sample/text.txt',
                  wavpath: str = './',
                  label_pattern: str = '"(?P<filename>.*)" "(?P<phonemes>.*)"',
-                 sr_target: int = 44100
+                 sr_target: int = 22050
                  ):
         super().__init__()
 
@@ -129,17 +129,19 @@ class ArabDataset(Dataset):
 
             fpath = os.path.join(self.wav_path, filename)
             if not os.path.exists(fpath):
-                print(f"{fpath} does not exist")
+                # print(f"{fpath} does not exist")
                 continue
 
             try:
                 tokens = text.phonemes_to_tokens(phonemes)
                 token_ids = text.tokens_to_ids(tokens)
             except:
-                print(f'invalid phonemes at line {l_idx}: {line}')
+                # print(f'invalid phonemes at line {l_idx}: {line}')
                 continue
            
             phoneme_mel_list.append((torch.LongTensor(token_ids), fpath))
+
+        print("Number of mel phonemes:", len(phoneme_mel_list))
 
         return phoneme_mel_list
 
