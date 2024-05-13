@@ -170,6 +170,27 @@ class ArabDataset(Dataset):
         mel_log = self._get_mel_from_fpath(fpath)
 
         return phonemes, mel_log
+
+
+class ArabDatasetFromSerialized(Dataset):
+    def __init__(self, tuples_list):
+        super().__init__()
+
+        self.data = []
+        self.mel_features = []
+
+        for phone, mel in tuples_list:
+            self.append(phone, mel)
+
+    def append(self, phonemes, features):
+        self.data.append(phonemes)
+        self.mel_features.append(features)
+
+    def __len__(self):
+        return len(self.data)
+
+    def __getitem__(self, idx):
+        return self.data[idx], self.mel_features[idx]
     
 
 class ArabDataset4FastPitch(Dataset):
