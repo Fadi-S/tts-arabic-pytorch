@@ -61,14 +61,11 @@ def remove_silence(energy_per_frame: torch.Tensor,
                    thresh: float = -10.0):
     keep = energy_per_frame > thresh
 
-    try:
-        # keep silence at the end
-        i = keep.size(0)-1
-        while not keep[i] and i > 0:
-            keep[i] = True
-            i -= 1
-    except:
-        print(energy_per_frame)
+    # keep silence at the end
+    i = keep.size(0)-1
+    while not keep[i] and i > 0:
+        keep[i] = True
+        i -= 1
 
     return keep
 
@@ -135,14 +132,14 @@ class ArabDataset(Dataset):
 
             fpath = os.path.join(self.wav_path, filename)
             if not os.path.exists(fpath):
-                # print(f"{fpath} does not exist")
+                print(f"{fpath} does not exist")
                 continue
 
             try:
                 tokens = text.phonemes_to_tokens(phonemes)
                 token_ids = text.tokens_to_ids(tokens)
             except:
-                # print(f'invalid phonemes at line {l_idx}: {line}')
+                print(f'invalid phonemes at line {l_idx}: {line}')
                 continue
            
             phoneme_mel_list.append((torch.LongTensor(token_ids), fpath))
