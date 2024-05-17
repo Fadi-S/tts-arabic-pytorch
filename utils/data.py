@@ -162,6 +162,8 @@ class ArabDataset(Dataset):
         mel_log = mel_raw.clamp_min(1e-5).log().squeeze()
 
         energy_per_frame = mel_log.mean(0)
+        if len(energy_per_frame.size()) == 0:
+            return None
         mel_log = mel_log[:, remove_silence(energy_per_frame)]
 
         return mel_log
@@ -173,6 +175,8 @@ class ArabDataset(Dataset):
 
         phonemes, fpath = self.data[idx]
         mel_log = self._get_mel_from_fpath(fpath)
+        if mel_log is None:
+            return self[idx+1] if idx+1 < len(self) else self[idx-1]
 
         return phonemes, mel_log
 
