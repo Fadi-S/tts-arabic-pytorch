@@ -119,6 +119,7 @@ class ArabDataset(Dataset):
     def _process_textfile(self, txtpath: str):
         
         lines = read_lines_from_file(txtpath)
+        print("Number of lines:", len(lines))
 
         phoneme_mel_list = []
 
