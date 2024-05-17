@@ -60,11 +60,16 @@ def normalize_pitch(pitch,
 def remove_silence(energy_per_frame: torch.Tensor, 
                    thresh: float = -10.0):
     keep = energy_per_frame > thresh
-    # keep silence at the end
-    i = keep.size(0)-1
-    while not keep[i] and i > 0:
-        keep[i] = True
-        i -= 1
+
+    try:
+        # keep silence at the end
+        i = keep.size(0)-1
+        while not keep[i] and i > 0:
+            keep[i] = True
+            i -= 1
+    except:
+        print(energy_per_frame)
+
     return keep
 
 def make_dataset_from_subdirs(folder_path):
