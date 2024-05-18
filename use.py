@@ -4,7 +4,7 @@ import soundfile as sf  # for saving audio files
 
 
 # model = Tacotron2Wave("pretrained/tacotron2_ar_adv.pth")
-model = Tacotron2Wave("states_7000.pth")
+model = Tacotron2Wave("states_5000.pth")
 # model = model.cuda()
 
 import text
